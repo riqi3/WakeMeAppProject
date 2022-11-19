@@ -46,7 +46,9 @@ class _HomeScreenState extends State<HomeScreen> {
               shape: BoxShape.circle,
             ),
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                print('helo');
+              },
               child: Container(
                 padding: EdgeInsets.all(10),
                 child: Image.asset('assets/images/face-id-scan.png'),
