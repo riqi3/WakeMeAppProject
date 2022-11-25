@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wmaproject/screens/camera.dart';
 import '../screens/home.dart';
 
 void main() {

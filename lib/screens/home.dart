@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:wmaproject/constants/colors.dart';
+import 'package:wmaproject/screens/home/alarm.dart';
+import 'package:wmaproject/screens/home/myjams.dart';
+import 'package:wmaproject/screens/home/sidenav.dart';
+
+import '../constants/bottomnav.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,29 +16,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _currentIndex = 0;
-
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: home',
-    ),
-    Text(
-      'Index 1: alarm',
-    ),
-    Text(
-      'Index 2: my jams',
-    ),
-    Text(
-      'Index 3: sidenav',
-    ),
-  ];
+  // final List<Widget> screens = <Widget>[
+  //   AlarmScreen(),
+  //   MyJamsScreen(),
+  //   SideNavMenu(),
+  // ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: _widgetOptions.elementAt(_currentIndex),
-      ),
+      body: Container(),
       floatingActionButton: Container(
         height: 60,
         width: 60,
@@ -47,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             child: InkWell(
               onTap: () {
-                print('helo');
+                scanFace();
               },
               child: Container(
                 padding: EdgeInsets.all(10),
@@ -58,46 +50,29 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: bottomNav(),
+      bottomNavigationBar: BottomNavMenu(),
     );
   }
 
-  BottomNavigationBar bottomNav() {
-    return BottomNavigationBar(
-      currentIndex: _currentIndex,
-      unselectedIconTheme: IconThemeData(
-        color: grey1,
-        size: 25,
-      ),
-      selectedIconTheme: IconThemeData(color: lightblue, size: 30),
-      type: BottomNavigationBarType.fixed,
-      items: [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.mic_off_outlined),
-          label: 'Off',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.access_alarm_outlined),
-          label: 'Alarm',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.access_alarm_outlined),
-          label: 'Alarm',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.library_music_outlined),
-          label: 'My Jams',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.menu),
-          label: 'More',
-        ),
-      ],
-      onTap: (index) {
-        setState(() {
-          _currentIndex = index;
-        });
-      },
-    );
+  void navOnTap(int _widgetOptions) {
+    if (_widgetOptions == 0) {
+      return print('home');
+    }
+    if (_widgetOptions == 1) {
+      return print('alarm');
+    }
+    if (_widgetOptions == 2) {
+      return;
+    }
+    if (_widgetOptions == 3) {
+      return print('jams');
+    }
+    if (_widgetOptions == 4) {
+      return print('more');
+    }
+  }
+
+  void scanFace() {
+    print('helo');
   }
 }
