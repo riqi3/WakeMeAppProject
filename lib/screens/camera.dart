@@ -1,63 +1,90 @@
-import 'package:camera/camera.dart';
-import 'package:flutter/material.dart';
+// import 'package:camera/camera.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter/cupertino.dart';
+// class CameraPage extends StatefulWidget {
+//   const CameraPage({Key? key, required this.cameras}) : super(key: key);
 
- List<CameraDescription>? _cameras;
+//   final List<CameraDescription>? cameras;
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+//   @override
+//   State<CameraPage> createState() => _CameraPageState();
+// }
 
-  _cameras = await availableCameras();
-  runApp(const CameraApp());
-}
+// class _CameraPageState extends State<CameraPage> {
+//   late CameraController _cameraController;
+//   bool _isRearCameraSelected = true;
 
-/// CameraApp is the Main Application.
-class CameraApp extends StatefulWidget {
-  /// Default Constructor
-  const CameraApp({Key? key}) : super(key: key);
+//   @override
+//   void dispose() {
+//     _cameraController.dispose();
+//     super.dispose();
+//   }
 
-  @override
-  State<CameraApp> createState() => _CameraAppState();
-}
+//   @override
+//   void initState() {
+//     super.initState();
+//     initCamera(widget.cameras![0]);
+//   }
 
-class _CameraAppState extends State<CameraApp> {
-  late CameraController controller;
+//   Future initCamera(CameraDescription cameraDescription) async {
+//     _cameraController =
+//         CameraController(cameraDescription, ResolutionPreset.high);
+//     try {
+//       await _cameraController.initialize().then((_) {
+//         if (!mounted) return;
+//         setState(() {});
+//       });
+//     } on CameraException catch (e) {
+//       debugPrint("camera error $e");
+//     }
+//   }
 
-  @override
-  void initState() {
-    super.initState();
-    controller = CameraController(_cameras![0], ResolutionPreset.max);
-    controller.initialize().then((_) {
-      if (!mounted) {
-        return;
-      }
-      setState(() {});
-    }).catchError((Object e) {
-      if (e is CameraException) {
-        switch (e.code) {
-          case 'CameraAccessDenied':
-            print('User denied camera access.');
-            break;
-          default:
-            print('Handle other errors.');
-            break;
-        }
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (!controller.value.isInitialized) {
-      return Container();
-    }
-    return MaterialApp(
-      home: CameraPreview(controller),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//         body: SafeArea(
+//       child: Stack(children: [
+//         (_cameraController.value.isInitialized)
+//             ? CameraPreview(_cameraController)
+//             : Container(
+//                 color: Colors.black,
+//                 child: const Center(child: CircularProgressIndicator())),
+//         Align(
+//             alignment: Alignment.bottomCenter,
+//             child: Container(
+//               height: MediaQuery.of(context).size.height * 0.20,
+//               decoration: const BoxDecoration(
+//                   borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+//                   color: Colors.black),
+//               child:
+//                   Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+//                 Expanded(
+//                     child: IconButton(
+//                   padding: EdgeInsets.zero,
+//                   iconSize: 30,
+//                   icon: Icon(
+//                       _isRearCameraSelected
+//                           ? CupertinoIcons.switch_camera
+//                           : CupertinoIcons.switch_camera_solid,
+//                       color: Colors.white),
+//                   onPressed: () {
+//                     setState(
+//                         () => _isRearCameraSelected = !_isRearCameraSelected);
+//                     initCamera(widget.cameras![_isRearCameraSelected ? 0 : 1]);
+//                   },
+//                 )),
+//                 Expanded(
+//                     child: IconButton(
+//                   onPressed: (){},
+//                   iconSize: 50,
+//                   padding: EdgeInsets.zero,
+//                   constraints: const BoxConstraints(),
+//                   icon: const Icon(Icons.circle, color: Colors.white),
+//                 )),
+//                 const Spacer(),
+//               ]),
+//             )),
+//       ]),
+//     ));
+//   }
+// }

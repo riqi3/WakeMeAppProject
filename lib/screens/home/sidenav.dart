@@ -39,7 +39,7 @@ class SideNavMenu extends StatelessWidget {
             title: Text('Logout'),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => HomeScreen(),
+                builder: (context) => HomeScreen(cameras: [],),
               ));
             },
           ),
