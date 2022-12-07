@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:wmaproject/constants/colors.dart';
-import 'package:wmaproject/screens/home/alarm.dart';
-import 'package:wmaproject/screens/home/myjams.dart';
-import 'package:wmaproject/screens/home/sidenav.dart';
-
-import '../constants/bottomnav.dart';
+import '../constants/colors.dart';
+import '../screens/home/alarm.dart';
+import '../screens/home/myjams.dart';
+import '../screens/home/sidenav.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,12 +14,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // final List<Widget> screens = <Widget>[
-  //   AlarmScreen(),
-  //   MyJamsScreen(),
-  //   SideNavMenu(),
-  // ];
+  int currentTab = 0;
 
+  List<Widget> screens = <Widget>[
+    HomeScreen(),
+    AlarmScreen(),
+    MyJamsScreen(),
+    SideNavMenu(),
+  ];
+
+  Widget currentScreen = HomeScreen();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,29 +52,143 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomNavMenu(),
+      bottomNavigationBar: BottomAppBar(
+        shape: CircularNotchedRectangle(),
+        notchMargin: 10,
+        child: Container(
+          height: 60,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  MaterialButton(
+                    minWidth: 40,
+                    onPressed: () {
+                      setState(() {
+                        currentTab = 0;
+                        navOnTap(currentTab, screens);
+                      });
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.home_outlined,
+                          color: currentTab == 0 ? lightblue : grey1,
+                        ),
+                        Text('Home',
+                            style: TextStyle(
+                              color: currentTab == 0 ? lightblue : grey1,
+                            )),
+                      ],
+                    ),
+                  ),
+                  MaterialButton(
+                    minWidth: 40,
+                    onPressed: () {
+                      setState(() {
+                        currentTab = 1;
+                        navOnTap(currentTab, screens);
+                      });
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.access_alarm_outlined,
+                          color: currentTab == 1 ? lightblue : grey1,
+                        ),
+                        Text('Alarm',
+                            style: TextStyle(
+                              color: currentTab == 1 ? lightblue : grey1,
+                            )),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  MaterialButton(
+                    minWidth: 40,
+                    onPressed: () {
+                      setState(() {
+                        currentTab = 2;
+                        navOnTap(currentTab, screens);
+                      });
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.library_music_outlined,
+                          color: currentTab == 2 ? lightblue : grey1,
+                        ),
+                        Text('My Jams',
+                            style: TextStyle(
+                              color: currentTab == 2 ? lightblue : grey1,
+                            )),
+                      ],
+                    ),
+                  ),
+                  MaterialButton(
+                    minWidth: 40,
+                    onPressed: () {
+                      setState(() {
+                        currentTab = 3;
+                        navOnTap(currentTab, screens);
+                      });
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.menu,
+                          color: currentTab == 3 ? lightblue : grey1,
+                        ),
+                        Text('Menu',
+                            style: TextStyle(
+                              color: currentTab == 3 ? lightblue : grey1,
+                            )),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
-  }
-
-  void navOnTap(int _widgetOptions) {
-    if (_widgetOptions == 0) {
-      return print('home');
-    }
-    if (_widgetOptions == 1) {
-      return print('alarm');
-    }
-    if (_widgetOptions == 2) {
-      return;
-    }
-    if (_widgetOptions == 3) {
-      return print('jams');
-    }
-    if (_widgetOptions == 4) {
-      return print('more');
-    }
   }
 
   void scanFace() {
     print('helo');
+  }
+
+  void navOnTap(int currentTab, List screens) {
+    if (currentTab == 0) {
+      screens[0];
+      print('home');
+      return;
+    }
+    if (currentTab == 1) {
+      screens[1];
+      print('alarm');
+      return;
+    }
+    if (currentTab == 2) {
+      screens[2];
+      print('jams');
+      return;
+    }
+    if (currentTab == 3) {
+      screens[3];
+      print('menu');
+      return;
+    }
   }
 }

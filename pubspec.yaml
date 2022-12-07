@@ -64,6 +64,8 @@ flutter:
   assets:
     - assets/images/face-id-scan.png
     - assets/images/face-id-red.png
+    - assets/images/bgLoginScreen.png
+    - assets/images/wma-logo.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

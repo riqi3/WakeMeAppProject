@@ -10,8 +10,10 @@ class MyJamsScreen extends StatefulWidget {
 class _MyJamsScreenState extends State<MyJamsScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text('My Jams'),
+    return Scaffold(
+      body: Container(
+      child: Text('My Jams', style: TextStyle(fontSize: 54)),
+    ),
     );
   }
 }

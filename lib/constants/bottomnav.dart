@@ -15,7 +15,10 @@ class BottomNavMenu extends StatefulWidget {
 
 class _BottomNavMenuState extends State<BottomNavMenu> {
   int currentTab = 0;
+
+
   Widget currentScreen = HomeScreen();
+
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
@@ -33,9 +36,14 @@ class _BottomNavMenuState extends State<BottomNavMenu> {
                   minWidth: 40,
                   onPressed: () {
                     setState(() {
-                      currentScreen = HomeScreen();
                       currentTab = 0;
+                                          Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => HomeScreen(),
+                    ));
+                      
                     });
+                    navOnTap(currentTab);
+                    
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -55,9 +63,13 @@ class _BottomNavMenuState extends State<BottomNavMenu> {
                   minWidth: 40,
                   onPressed: () {
                     setState(() {
-                      currentScreen = AlarmScreen();
+                      // currentScreen = AlarmScreen();
+                       Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => AlarmScreen(),
+                    ));
                       currentTab = 1;
                     });
+                    navOnTap(currentTab);
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -82,7 +94,8 @@ class _BottomNavMenuState extends State<BottomNavMenu> {
                   minWidth: 40,
                   onPressed: () {
                     setState(() {
-                      currentScreen = MyJamsScreen();
+                      // currentScreen = MyJamsScreen();
+
                       currentTab = 2;
                     });
                   },
@@ -104,7 +117,7 @@ class _BottomNavMenuState extends State<BottomNavMenu> {
                   minWidth: 40,
                   onPressed: () {
                     setState(() {
-                      currentScreen = SideNavMenu();
+                      // currentScreen = SideNavMenu();
                       currentTab = 3;
                     });
                   },
@@ -129,4 +142,22 @@ class _BottomNavMenuState extends State<BottomNavMenu> {
       ),
     );
   }
+
+void navOnTap(int currentTab){
+  if (currentTab == 0) {
+    currentScreen = HomeScreen();
+  }
+  if (currentTab == 1) {
+    currentScreen = AlarmScreen();
+  }
+  if (currentTab == 2) {
+    currentScreen = MyJamsScreen();
+  }
+  if (currentTab == 3) {
+    currentScreen = SideNavMenu();
+  }
 }
+
+
+}
+
