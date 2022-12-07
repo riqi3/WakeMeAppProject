@@ -27,7 +27,8 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         // primarySwatch: Colors.blue,
       ),
-      home: LoginScreen(),
+      debugShowCheckedModeBanner: false,
+      home: LoginScreen(cameras: [],),
     );
   }
 }
