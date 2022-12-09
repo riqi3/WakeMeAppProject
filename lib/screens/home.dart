@@ -7,9 +7,10 @@ import '../constants/colors.dart';
 import '../screens/home/alarm.dart';
 import '../screens/home/myjams.dart';
 import '../screens/home/sidenav.dart';
+import 'login/login.dart';
 
 class HomeScreen extends StatefulWidget {
-    const HomeScreen({Key? key, required this.cameras}) : super(key: key);
+  const HomeScreen({Key? key, required this.cameras}) : super(key: key);
 
   final List<CameraDescription>? cameras;
 
@@ -19,7 +20,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late CameraController _cameraController;
-  bool _isRearCameraSelected = true;
+  bool _isRearCameraSelected = false;
 
   @override
   void dispose() {
@@ -30,9 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    initCamera(widget.cameras![0]);
+    initCamera(widget.cameras![1]);
   }
-
 
   Future initCamera(CameraDescription cameraDescription) async {
     _cameraController =
@@ -47,67 +47,33 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-
-
   int currentTab = 0;
 
   List<Widget> screens = <Widget>[
-    HomeScreen(cameras: [],),
+    HomeScreen(
+      cameras: [],
+    ),
     AlarmScreen(),
     MyJamsScreen(),
-    SideNavMenu(),
+    SideNavMenu(
+      cameras: [],
+    ),
   ];
 
-  Widget currentScreen = HomeScreen(cameras: [],);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-      child: Stack(children: [
-        
-        (_cameraController.value.isInitialized)
-            ? CameraPreview(_cameraController)
-            : Container(
-                color: Colors.black,
-                child: const Center(child: CircularProgressIndicator())),
-        // Align(
-        //     alignment: Alignment.bottomCenter,
-        //     child: Container(
-        //       height: MediaQuery.of(context).size.height * 0.20,
-        //       decoration: const BoxDecoration(
-        //           borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-        //           color: Colors.black),
-        //       child:
-        //           Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-        //         Expanded(
-        //             child: IconButton(
-        //           padding: EdgeInsets.zero,
-        //           iconSize: 30,
-        //           icon: Icon(
-        //               _isRearCameraSelected
-        //                   ? CupertinoIcons.switch_camera
-        //                   : CupertinoIcons.switch_camera_solid,
-        //               color: Colors.white),
-        //           onPressed: () {
-        //             setState(
-        //                 () => _isRearCameraSelected = !_isRearCameraSelected);
-        //             initCamera(widget.cameras![_isRearCameraSelected ? 0 : 1]);
-        //           },
-        //         )),
-        //         Expanded(
-        //             child: IconButton(
-        //           onPressed: takePicture,
-        //           iconSize: 50,
-        //           padding: EdgeInsets.zero,
-        //           constraints: const BoxConstraints(),
-        //           icon: const Icon(Icons.circle, color: Colors.white),
-        //         )),
-        //         const Spacer(),
-        //       ]),
-        //     )),
-      ]),
+      extendBody: true,
+      body: Container(
+        child: Stack(children: [
+          (_cameraController.value.isInitialized)
+              ? CameraPreview(_cameraController)
+              : Center(
+                 
+                  child: const Center(child: CircularProgressIndicator())),
+        ]),
     ),
-      floatingActionButton: Container(
+          floatingActionButton: Container(
         height: 60,
         width: 60,
         child: Material(
@@ -135,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
         shape: CircularNotchedRectangle(),
         notchMargin: 10,
         child: Container(
-          height: 60,
+          height: 50,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -154,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
-                          Icons.home_outlined,
+                          Icons.mic_none_sharp,
                           color: currentTab == 0 ? lightblue : grey1,
                         ),
                         Text('Home',
@@ -251,22 +217,57 @@ class _HomeScreenState extends State<HomeScreen> {
   void navOnTap(int currentTab, List screens) {
     if (currentTab == 0) {
       screens[0];
-      print('home');
+      print(' Mic');
       return;
     }
     if (currentTab == 1) {
-      screens[1];
-      print('alarm');
+      showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return SizedBox(
+            height: 400,
+            child: Center(
+              child: ElevatedButton(
+                  child: const Text(
+                    'Close Alarm',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+            ),
+          );
+        },
+      );
       return;
     }
     if (currentTab == 2) {
-      screens[2];
-      print('jams');
+      showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return SizedBox(
+            height: 400,
+            child: Center(
+              child: ElevatedButton(
+                  child: const Text(
+                    'Close Music',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+            ),
+          );
+        },
+      );
       return;
     }
     if (currentTab == 3) {
-      screens[3];
-      print('menu');
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => SideNavMenu(
+          cameras: [],
+        ),
+      ));
       return;
     }
   }

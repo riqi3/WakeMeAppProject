@@ -1,8 +1,13 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:wmaproject/screens/home.dart';
 
+import '../login/login.dart';
+
 class SideNavMenu extends StatelessWidget {
-  const SideNavMenu({super.key});
+  const SideNavMenu({Key? key, required this.cameras}) : super(key: key);
+
+  final List<CameraDescription>? cameras;
 
   @override
   Widget build(BuildContext context) {
@@ -11,35 +16,68 @@ class SideNavMenu extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text("Enrique III C. Pacudan BSIT - 3",
+            accountName: Text("Wake Me Application",
                 style: TextStyle(color: Colors.white)),
-            accountEmail: Text("enrique.pacudan@usjr.edu.ph",
+            accountEmail: Text("Gabison, Pacudan, Sumampong - SoftEng1(11061)",
                 style: TextStyle(color: Colors.white)),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
-                child: Image.network(
-                  'https://scontent-xsp1-1.xx.fbcdn.net/v/t39.30808-6/239832143_1891970710974751_584089794898206477_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=174925&_nc_eui2=AeHwLK_0WzpoHSDFptmPPoqnDocKZQTkfCgOhwplBOR8KCrlcYTIHBWeYmKuQ1uny2ol64GOT5imFCTT9-q_uaf6&_nc_ohc=pYLuv0BHJ_4AX-f8LGN&_nc_ht=scontent-xsp1-1.xx&oh=00_AT9Uxs3NZDy9SI6NKN0ubxUysUB9MysHgN0XEmXr438cig&oe=635CE753',
-                  width: 90,
-                  height: 90,
+                child: Image.asset(
+                  'assets/images/wma-logo.png',
+                  height: 200,
+                  width: 200,
                   fit: BoxFit.cover,
                 ),
               ),
             ),
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage(
-                  'https://scontent-xsp1-3.xx.fbcdn.net/v/t1.18169-9/27867370_850948541743645_687003434840380314_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=19026a&_nc_eui2=AeGlQPfzKVaHY0CQxOBW2mlkoACO0hyDKFygAI7SHIMoXCMkk1rH8JL0C9Zqe9Jav3qWglZ7IRvp62VhQRV7Bxk2&_nc_ohc=s--0bSqesfwAX_v9gUy&_nc_ht=scontent-xsp1-3.xx&oh=00_AT8FS2ZryQyTdbofo-rGzRKixCE-KziyvCsPZPTz6ZR03w&oe=637CF607',
-                ),
+                image: AssetImage("assets/images/bgLoginScreen.png"),
                 fit: BoxFit.cover,
               ),
             ),
+          ),
+          ListTile(
+            leading: Icon(Icons.email_outlined),
+            title: Text('Announcements'),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: Icon(Icons.headphones_outlined),
+            title: Text('Support'),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: Icon(Icons.settings_outlined),
+            title: Text('Settings'),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: Icon(Icons.toggle_on),
+            title: Text('Night Mode'),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: Icon(Icons.arrow_back),
+            title: Text('Back'),
+            onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+	builder: (context) => HomeScreen(cameras: [],),
+));
+                },
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+            child: Divider(color: Colors.black),
           ),
           ListTile(
             leading: Icon(Icons.logout),
             title: Text('Logout'),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => HomeScreen(cameras: [],),
+                builder: (context) => LoginScreen(
+                  cameras: [],
+                ),
               ));
             },
           ),
