@@ -57,15 +57,6 @@ class SideNavMenu extends StatelessWidget {
             title: Text('Night Mode'),
             onTap: () {},
           ),
-          ListTile(
-            leading: Icon(Icons.arrow_back),
-            title: Text('Back'),
-            onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-	builder: (context) => HomeScreen(cameras: [],),
-));
-                },
-          ),
           Padding(
             padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
             child: Divider(color: Colors.black),

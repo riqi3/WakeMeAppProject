@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import '../constants/colors.dart';
-import '../screens/home/alarm.dart';
+import 'home/alarmpage/alarm.dart';
 import '../screens/home/myjams.dart';
 import '../screens/home/sidenav.dart';
+import 'home/alarmpage/widgets/roundbtn.dart';
 import 'login/login.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,9 +19,20 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late CameraController _cameraController;
+  late AnimationController controller;
   bool _isRearCameraSelected = false;
+  bool isPlaying = false;
+
+  String get countText {
+    Duration count = controller.duration! * controller.value;
+    return controller.isDismissed
+        ? '${controller.duration!.inHours}:${(controller.duration!.inMinutes % 60).toString().padLeft(2, '0')}:${(controller.duration!.inSeconds % 60).toString().padLeft(2, '0')}'
+        : '${count.inHours}:${(count.inMinutes % 60).toString().padLeft(2, '0')}:${(count.inSeconds % 60).toString().padLeft(2, '0')}';
+  }
+
+  double progress = 1.0;
 
   @override
   void dispose() {
@@ -60,6 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
     ),
   ];
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,12 +81,10 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Stack(children: [
           (_cameraController.value.isInitialized)
               ? CameraPreview(_cameraController)
-              : Center(
-                 
-                  child: const Center(child: CircularProgressIndicator())),
+              : Center(child: const Center(child: CircularProgressIndicator())),
         ]),
-    ),
-          floatingActionButton: Container(
+      ),
+      floatingActionButton: Container(
         height: 60,
         width: 60,
         child: Material(
@@ -123,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Icons.mic_none_sharp,
                           color: currentTab == 0 ? lightblue : grey1,
                         ),
-                        Text('Home',
+                        Text('Mic',
                             style: TextStyle(
                               color: currentTab == 0 ? lightblue : grey1,
                             )),
@@ -216,50 +227,30 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void navOnTap(int currentTab, List screens) {
     if (currentTab == 0) {
-      screens[0];
-      print(' Mic');
+  //       AlanVoice.addButton("bb5db169d5c35af285ec08f30abae3b72e956eca572e1d8b807a3e2338fdd0dc/stage");
+
+  // /// Handle commands from Alan Studio
+  // AlanVoice.onCommand.add((command) {
+  //   debugPrint("got new command ${command.toString()}");
+  // });
       return;
     }
     if (currentTab == 1) {
-      showModalBottomSheet(
+            showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
-          return SizedBox(
-            height: 400,
-            child: Center(
-              child: ElevatedButton(
-                  child: const Text(
-                    'Close Alarm',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  }),
-            ),
-          );
+          return AlarmScreen();
         },
       );
       return;
     }
     if (currentTab == 2) {
-      showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          return SizedBox(
-            height: 400,
-            child: Center(
-              child: ElevatedButton(
-                  child: const Text(
-                    'Close Music',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  }),
-            ),
-          );
-        },
-      );
+      // showModalBottomSheet(
+      //   context: context,
+      //   builder: (BuildContext context) {
+      //     return AlarmScreen();
+      //   },
+      // );
       return;
     }
     if (currentTab == 3) {

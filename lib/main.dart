@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wmaproject/screens/camera.dart';
+import 'package:wmaproject/screens/home/alarmpage/alarm.dart';
 import '../screens/home.dart';
 import 'screens/home/sidenav.dart';
 import 'screens/login/login.dart';
